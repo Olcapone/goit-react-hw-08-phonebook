@@ -1,7 +1,9 @@
+import s from "./AppBar.module.css";
+
 const AppBar = () => (
-  <div>
-    <h1>Start Page</h1>
-  </div>
+  <h1 className={s.mainTitle}>
+    <span className={s.logo}>P</span>honebook
+  </h1>
 );
 
 export default AppBar;
