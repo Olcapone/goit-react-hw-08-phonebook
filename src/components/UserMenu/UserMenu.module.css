@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+.user {
+  margin-right: 15px;
+}
