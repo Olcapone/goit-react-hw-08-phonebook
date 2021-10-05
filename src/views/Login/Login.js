@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button/Button";
 import authOperations from "../../redux/auth/auth-operations";
+import authSelectors from "../../redux/auth/auth-selectors";
 import s from "./Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const isLogged = useSelector(authSelectors.getIsLoggedIn);
 
   const reset = () => {
     setEmail("");
@@ -37,29 +39,31 @@ const Login = () => {
 
   return (
     <div className={s.container}>
-      <form className={s.form} onSubmit={handleSubmit}>
-        <label className={s.formLabel}>
-          <input
-            name="email"
-            type="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="email"
-            className={s.formControl}
-          />
-        </label>
-        <label className={s.formLabel}>
-          <input
-            name="password"
-            type="password"
-            value={password}
-            onChange={handleChange}
-            placeholder="password"
-            className={s.formControl}
-          />
-        </label>
-        <Button name={"Login"} />
-      </form>
+      {!isLogged && (
+        <form className={s.form} onSubmit={handleSubmit}>
+          <label className={s.formLabel}>
+            <input
+              name="email"
+              type="email"
+              value={email}
+              onChange={handleChange}
+              placeholder="email"
+              className={s.formControl}
+            />
+          </label>
+          <label className={s.formLabel}>
+            <input
+              name="password"
+              type="password"
+              value={password}
+              onChange={handleChange}
+              placeholder="password"
+              className={s.formControl}
+            />
+          </label>
+          <Button name={"Login"} />
+        </form>
+      )}
     </div>
   );
 };
