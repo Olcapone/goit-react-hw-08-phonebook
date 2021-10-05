@@ -2,17 +2,10 @@
   display: flex;
   justify-content: center;
 }
-.form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .formLabel {
   display: block;
-  margin-right: 20px;
   max-width: 100%;
-  /* margin-bottom: 5px; */
   font-weight: 500;
 }
 
@@ -29,4 +22,22 @@
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+@media screen and (max-width: 740px) {
+  .formLabel {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  .form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .formLabel {
+    margin-right: 20px;
+  }
 }

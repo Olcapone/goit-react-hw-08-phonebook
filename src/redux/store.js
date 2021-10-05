@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import contactReducers from "./contacts/contacts-reducer";
 import {
   persistStore,
   persistReducer,
@@ -12,16 +11,19 @@ import {
 } from "redux-persist";
 import logger from "redux-logger";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import contactReducers from "./contacts/contacts-reducer";
+import authReducers from "./auth/auth-reducer";
 
 const contactPersistConfig = {
-  key: "contacts",
+  key: "auth",
   storage,
-  //   blacklist: ["filter"],
+  whitelist: ["token"],
 };
 
 const store = configureStore({
   reducer: {
-    contacts: persistReducer(contactPersistConfig, contactReducers),
+    auth: persistReducer(contactPersistConfig, authReducers),
+    contacts: contactReducers,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({
