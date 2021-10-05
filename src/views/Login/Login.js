@@ -1,11 +1,13 @@
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
 import Button from "../../components/Button/Button";
+import authOperations from "../../redux/auth/auth-operations";
 import s from "./Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const reset = () => {
     setEmail("");
@@ -26,12 +28,16 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (email !== "" && password !== "") {
+      dispatch(authOperations.login({ email, password }));
+    }
+
     reset();
   };
 
   return (
     <div className={s.container}>
-      <form className={s.form}>
+      <form className={s.form} onSubmit={handleSubmit}>
         <label className={s.formLabel}>
           <input
             name="email"
@@ -52,7 +58,7 @@ const Login = () => {
             className={s.formControl}
           />
         </label>
-        <Button name={"Login"} onSubmit={handleSubmit} />
+        <Button name={"Login"} />
       </form>
     </div>
   );
