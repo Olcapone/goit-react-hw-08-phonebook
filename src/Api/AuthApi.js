@@ -11,6 +11,6 @@ export function addUser(user) {
   return axios.post(`/signup`, user);
 }
 
-export function deleteContact(id) {
-  return axios.delete(`/items/` + id);
-}
+// export function deleteContact(id) {
+//   return axios.delete(`/items/` + id);
+// }

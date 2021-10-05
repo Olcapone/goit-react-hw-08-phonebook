@@ -1,17 +1,22 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+//import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import shortid from "shortid";
 
 import actions from "./contacts-actions";
 import * as ContactsAPI from "../../Api/Api";
 
-export const fetchContact = createAsyncThunk(
-  "fetchContactsRequest",
-  async () => {
-    const contacts = await ContactsAPI.fetchContacts();
-    return contacts;
-  }
-);
+export const fetchContact = () => async (dispatch) => {
+  dispatch(actions.fetchContactRequest());
+
+  ContactsAPI.fetchContacts()
+    .then(({ data }) => {
+      return dispatch(actions.fetchContactSuccess(data));
+    })
+    .catch((error) => {
+      toast.error("Contact is not added! Something wrong!");
+      return dispatch(actions.fetchContactError(error.message));
+    });
+};
 
 export const addContacts =
   ({ stateName, number }) =>
@@ -27,7 +32,7 @@ export const addContacts =
       })
       .catch((error) => {
         toast.error("Contact is not added! Something wrong!");
-        return dispatch(actions.addContactError(error));
+        return dispatch(actions.addContactError(error.message));
       });
   };
 
