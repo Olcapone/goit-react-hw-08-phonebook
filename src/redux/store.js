@@ -20,7 +20,7 @@ const contactPersistConfig = {
   whitelist: ["token"],
 };
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: persistReducer(contactPersistConfig, authReducers),
     contacts: contactReducers,
@@ -36,5 +36,4 @@ const store = configureStore({
   devTools: process.env.NODE_ENV === "development",
 });
 
-const persistor = persistStore(store);
-export default { persistor, store };
+export const persistor = persistStore(store);

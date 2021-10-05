@@ -5,6 +5,8 @@ import shortid from "shortid";
 import actions from "./contacts-actions";
 import * as ContactsAPI from "../../Api/Api";
 
+//=== have to refactoring with thunk
+
 export const fetchContact = () => async (dispatch) => {
   dispatch(actions.fetchContactRequest());
 
