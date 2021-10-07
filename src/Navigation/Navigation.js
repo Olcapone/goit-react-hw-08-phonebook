@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import AppBar from "../components/AppBar/AppBar";
 import AuthNav from "../components/AuthNav/AuthNav";
+import ContactsMenu from "../components/ContactsMenu/ContactsMenu";
 import UserMenu from "../components/UserMenu/UserMenu";
 import authSelectors from "../redux/auth/auth-selectors";
 
@@ -12,7 +13,15 @@ const Navigation = () => {
   return (
     <nav className={s.navigation}>
       <AppBar />
-      {isLogged ? <UserMenu /> : <AuthNav />}
+      {isLogged ? (
+        <>
+          {" "}
+          <ContactsMenu />
+          <UserMenu />{" "}
+        </>
+      ) : (
+        <AuthNav />
+      )}
     </nav>
   );
 };

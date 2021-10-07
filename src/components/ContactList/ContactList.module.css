@@ -4,10 +4,6 @@ ul {
   list-style: none;
 }
 
-.list {
-  padding-bottom: 60px;
-}
-
 .item {
   display: flex;
   align-items: center;

@@ -21,20 +21,23 @@ function ContactList({ onDelete }) {
   return (
     <>
       {contact.length !== 0 && (
-        <ul className={s.list}>
-          {contact.map(({ name, number, id }) => (
-            <li className={s.item} key={shortid.generate()}>
-              {name} : {number}{" "}
-              <button
-                className={s.button}
-                type="button"
-                onClick={() => onDelete(id)}
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
+        <section>
+          <h2 className="mainTitle">Contacts</h2>
+          <ul className={s.list}>
+            {contact.map(({ name, number, id }) => (
+              <li className={s.item} key={shortid.generate()}>
+                {name} : {number}{" "}
+                <button
+                  className={s.button}
+                  type="button"
+                  onClick={() => onDelete(id)}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
     </>
   );
