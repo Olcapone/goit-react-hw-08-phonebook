@@ -1,7 +1,11 @@
-ul {
+/* ul {
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+.list {
+  margin-top: 20px;
 }
 
 .item {
@@ -12,7 +16,7 @@ ul {
 
 .item:not(:last-child) {
   margin-bottom: 20px;
-}
+} */
 
 .button {
   max-width: 100%;

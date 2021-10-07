@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import s from "./ContactsMenu.module.css";
+import Title from "../Title/Title";
 
 const ContactsMenu = () => {
   return (
-    <Link to={`/contacts`} className={s.mainTitle}>
-      My contacts
+    <Link to={`/contacts`}>
+      <Title name={"My contacts"} />
     </Link>
   );
 };

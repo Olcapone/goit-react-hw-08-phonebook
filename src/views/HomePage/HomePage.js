@@ -5,7 +5,7 @@ import ContactContainer from "../../components/ContactContainer/ContactContainer
 const HomePage = () => {
   const isLogged = useSelector(authSelectors.getIsLoggedIn);
 
-  return <>{isLogged && <ContactContainer />}</>;
+  return <>{isLogged && <ContactContainer />} </>;
 };
 
 export default HomePage;

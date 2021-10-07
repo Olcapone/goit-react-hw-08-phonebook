@@ -9,6 +9,7 @@ import { getContacts } from "../../redux/contacts/contacts-selectors";
 
 //=== styles
 import s from "./ContactList.module.css";
+import Title from "../Title/Title";
 
 function ContactList({ onDelete }) {
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ function ContactList({ onDelete }) {
     <>
       {contact.length !== 0 && (
         <section>
-          <h2 className="mainTitle">Contacts</h2>
+          <Title name={"Contacts"} />
+
           <ul className={s.list}>
             {contact.map(({ name, number, id }) => (
               <li className={s.item} key={shortid.generate()}>
