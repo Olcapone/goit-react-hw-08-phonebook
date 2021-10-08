@@ -1,15 +1,19 @@
+import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import s from "./AuthNav.module.css";
 
 const AuthNav = () => (
-  <div>
-    <Link to="/login" className={s.link}>
-      Login
+  <>
+    <Link to="/login">
+      <Typography component="span" color="primary.contrastText" sx={{ mr: 2 }}>
+        Login
+      </Typography>
     </Link>
-    <Link to="/register" className={s.link}>
-      Registration
+    <Link to="/register">
+      <Typography component="span" color="primary.contrastText">
+        Registration
+      </Typography>
     </Link>
-  </div>
+  </>
 );
 
 export default AuthNav;

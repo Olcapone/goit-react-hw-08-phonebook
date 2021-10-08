@@ -1,9 +1,10 @@
+import { Button, Container, FormGroup, TextField } from "@mui/material";
+import { maxWidth } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../../components/Button/Button";
+
 import authOperations from "../../redux/auth/auth-operations";
 import authSelectors from "../../redux/auth/auth-selectors";
-import s from "./Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -38,33 +39,49 @@ const Login = () => {
   };
 
   return (
-    <div className={s.container}>
+    <Container
+      sx={{
+        mt: 2,
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       {!isLogged && (
-        <form className={s.form} onSubmit={handleSubmit}>
-          <label className={s.formLabel}>
-            <input
+        <FormGroup sx={{ maxWidth: 350 }}>
+          <form onSubmit={handleSubmit}>
+            <TextField
               name="email"
               type="email"
+              label="Email"
               value={email}
               onChange={handleChange}
-              placeholder="email"
-              className={s.formControl}
+              variant="standard"
+              sx={{ width: 1 }}
             />
-          </label>
-          <label className={s.formLabel}>
-            <input
+
+            <TextField
               name="password"
               type="password"
+              label="Password"
               value={password}
               onChange={handleChange}
-              placeholder="password"
-              className={s.formControl}
+              variant="standard"
+              sx={{ width: 1 }}
             />
-          </label>
-          <Button name={"Login"} />
-        </form>
+            <Button
+              type="submit"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+              variant="contained"
+              sx={{ mt: 2 }}
+            >
+              Login
+            </Button>
+          </form>
+        </FormGroup>
       )}
-    </div>
+    </Container>
   );
 };
 

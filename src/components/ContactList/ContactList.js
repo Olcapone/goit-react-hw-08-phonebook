@@ -8,8 +8,7 @@ import * as operations from "../../redux/contacts/contacts-operations";
 import { getContacts } from "../../redux/contacts/contacts-selectors";
 
 //=== styles
-import s from "./ContactList.module.css";
-import Title from "../Title/Title";
+import { Button, List, ListItem, Typography } from "@mui/material";
 
 function ContactList({ onDelete }) {
   const dispatch = useDispatch();
@@ -22,24 +21,39 @@ function ContactList({ onDelete }) {
   return (
     <>
       {contact.length !== 0 && (
-        <section>
-          <Title name={"Contacts"} />
+        <>
+          <Typography
+            component="h2"
+            sx={{ fontSize: 24, textAlign: "center", mb: 2, mt: 2 }}
+          >
+            Contacts
+          </Typography>
 
-          <ul className={s.list}>
+          <List>
             {contact.map(({ name, number, id }) => (
-              <li className={s.item} key={shortid.generate()}>
-                {name} : {number}{" "}
-                <button
-                  className={s.button}
+              <ListItem
+                key={shortid.generate()}
+                sx={{
+                  justifyContent: "space-between",
+                  width: 320,
+                }}
+              >
+                {name}:
+                <Typography component="span" sx={{ mr: 1 }}>
+                  {number}
+                </Typography>
+                <Button
                   type="button"
                   onClick={() => onDelete(id)}
+                  color="secondary"
+                  variant="contained"
                 >
                   Delete
-                </button>
-              </li>
+                </Button>
+              </ListItem>
             ))}
-          </ul>
-        </section>
+          </List>
+        </>
       )}
     </>
   );

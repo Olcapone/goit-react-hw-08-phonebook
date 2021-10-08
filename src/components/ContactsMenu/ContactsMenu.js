@@ -1,10 +1,12 @@
+import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import Title from "../Title/Title";
 
 const ContactsMenu = () => {
   return (
     <Link to={`/contacts`}>
-      <Title name={"My contacts"} />
+      <Typography component="span" color="#fff" sx={{ mr: 8 }}>
+        My contacts
+      </Typography>
     </Link>
   );
 };

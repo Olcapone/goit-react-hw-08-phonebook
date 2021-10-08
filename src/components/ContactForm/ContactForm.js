@@ -5,8 +5,9 @@ import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
 import * as operations from "../../redux/contacts/contacts-operations";
 //===styles
-import s from "./ContactForm.module.css";
+
 import { getAllContact } from "../../redux/contacts/contacts-selectors";
+import { FormGroup, TextField, Button } from "@mui/material";
 
 function ContactForm({ onSubmit }) {
   const [stateName, setName] = useState("");
@@ -46,11 +47,10 @@ function ContactForm({ onSubmit }) {
   };
 
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
-      <label className={s.label}>
-        Name
-        <input
-          className={s.input}
+    <FormGroup>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Name"
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -58,13 +58,12 @@ function ContactForm({ onSubmit }) {
           required
           value={stateName}
           onChange={handleChange}
+          variant="standard"
+          sx={{ width: 1 }}
         />
-      </label>
 
-      <label className={s.label}>
-        Number
-        <input
-          className={s.input}
+        <TextField
+          label="Number"
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -72,13 +71,20 @@ function ContactForm({ onSubmit }) {
           required
           value={number}
           onChange={handleChange}
+          variant="standard"
+          sx={{ width: 1 }}
         />
-      </label>
 
-      <button className={s.button} type="submit" onSubmit={reset}>
-        Add contact
-      </button>
-    </form>
+        <Button
+          type="submit"
+          onSubmit={reset}
+          variant="contained"
+          sx={{ mt: 4 }}
+        >
+          Add contact
+        </Button>
+      </form>
+    </FormGroup>
   );
 }
 

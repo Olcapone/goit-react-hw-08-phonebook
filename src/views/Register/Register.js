@@ -1,9 +1,9 @@
+import { TextField, Container, Button, FormGroup } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../../components/Button/Button";
+
 import authOperations from "../../redux/auth/auth-operations";
 import authSelectors from "../../redux/auth/auth-selectors";
-import s from "./Register.module.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -42,44 +42,62 @@ const Register = () => {
   };
 
   return (
-    <div className={s.container}>
+    <Container
+      sx={{
+        mt: 2,
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       {!isLogged && (
-        <form className={s.form} onSubmit={handleSubmit}>
-          <label className={s.formLabel}>
-            <input
+        <FormGroup sx={{ maxWidth: 320 }}>
+          <form onSubmit={handleSubmit}>
+            <TextField
               name="name"
               type="text"
+              label="Name"
               value={name}
               onChange={handleChange}
-              placeholder="name"
-              className={s.formControl}
+              variant="standard"
+              sx={{ width: 1 }}
             />
-          </label>
-          <label className={s.formLabel}>
-            <input
+
+            <TextField
               name="email"
               type="email"
+              label="Email"
               value={email}
               onChange={handleChange}
-              placeholder="email"
-              className={s.formControl}
+              variant="standard"
+              sx={{ width: 1 }}
             />
-          </label>
-          <label className={s.formLabel}>
-            <input
+
+            <TextField
               name="password"
               type="password"
+              label="Password"
               value={password}
               onChange={handleChange}
-              placeholder="password"
-              className={s.formControl}
+              variant="standard"
+              sx={{ width: 1 }}
             />
-          </label>
 
-          <Button name={"Register"} />
-        </form>
+            <Button
+              type="submit"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+              variant="contained"
+              sx={{
+                mt: 2,
+              }}
+            >
+              Register
+            </Button>
+          </form>
+        </FormGroup>
       )}
-    </div>
+    </Container>
   );
 };
 

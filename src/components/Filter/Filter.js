@@ -1,20 +1,19 @@
+import { TextField } from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
 import contactActions from "../../redux/contacts/contacts-actions";
-import s from "./Filter.module.css";
 
 const Filter = ({ value, onChange }) => {
   return (
-    <div className={s.wrap}>
-      <p className={s.title}>Find contacts by name</p>
-      <input
-        className={s.input}
-        type="text"
-        name="filter"
-        value={value}
-        onChange={onChange}
-      />
-    </div>
+    <TextField
+      label="Find contacts by name"
+      type="text"
+      name="filter"
+      value={value}
+      onChange={onChange}
+      variant="standard"
+      sx={{ mt: 2, width: 1 }}
+    />
   );
 };
 
