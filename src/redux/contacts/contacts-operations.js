@@ -1,16 +1,16 @@
 //import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import shortid from "shortid";
-
+import axios from "axios";
 import actions from "./contacts-actions";
-import * as ContactsAPI from "../../Api/Api";
 
 //=== have to refactoring with thunk
 
 export const fetchContact = () => async (dispatch) => {
   dispatch(actions.fetchContactRequest());
 
-  ContactsAPI.fetchContacts()
+  axios
+    .get(`/contacts`)
     .then(({ data }) => {
       return dispatch(actions.fetchContactSuccess(data));
     })
@@ -27,7 +27,8 @@ export const addContacts =
 
     dispatch(actions.addContactRequest());
 
-    ContactsAPI.addContact(user)
+    axios
+      .post(`/contacts`, user)
       .then(({ data }) => {
         toast.success("Contact successfully added!");
         return dispatch(actions.addContactSuccess(data));
@@ -41,7 +42,8 @@ export const addContacts =
 export const deleteContact = (userId) => (dispatch) => {
   dispatch(actions.deleteContactRequest());
 
-  ContactsAPI.deleteContact(userId)
+  axios
+    .delete(`/contacts/${userId}`)
     .then(() => {
       toast.success("Contact successfully deleted!");
       return dispatch(actions.deleteContactSuccess(userId));
