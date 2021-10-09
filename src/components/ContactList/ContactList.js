@@ -20,41 +20,37 @@ function ContactList({ onDelete }) {
 
   return (
     <>
-      {contact.length !== 0 && (
-        <>
-          <Typography
-            component="h2"
-            sx={{ fontSize: 24, textAlign: "center", mb: 2, mt: 2 }}
-          >
-            Contacts
-          </Typography>
+      <Typography
+        component="h2"
+        sx={{ fontSize: 24, textAlign: "center", mb: 2, mt: 2 }}
+      >
+        Contacts
+      </Typography>
 
-          <List>
-            {contact.map(({ name, number, id }) => (
-              <ListItem
-                key={shortid.generate()}
-                sx={{
-                  justifyContent: "space-between",
-                  width: 320,
-                }}
-              >
-                {name}:
-                <Typography component="span" sx={{ mr: 1 }}>
-                  {number}
-                </Typography>
-                <Button
-                  type="button"
-                  onClick={() => onDelete(id)}
-                  color="secondary"
-                  variant="contained"
-                >
-                  Delete
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-        </>
-      )}
+      <List>
+        {contact.map(({ name, number, id }) => (
+          <ListItem
+            key={shortid.generate()}
+            sx={{
+              justifyContent: "space-between",
+              width: 320,
+            }}
+          >
+            {name}:
+            <Typography component="span" sx={{ mr: 1 }}>
+              {number}
+            </Typography>
+            <Button
+              type="button"
+              onClick={() => onDelete(id)}
+              color="secondary"
+              variant="contained"
+            >
+              Delete
+            </Button>
+          </ListItem>
+        ))}
+      </List>
     </>
   );
 }
