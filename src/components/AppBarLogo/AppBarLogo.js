@@ -12,7 +12,7 @@ const AppBarLogo = () => {
   return (
     <Typography
       component="h1"
-      sx={{ flexGrow: 1, color: "primary.contrastText" }}
+      sx={{ flexGrow: 1, color: "primary.contrastText", cursor: "pointer" }}
       onClick={onGoBack}
     >
       Phonebook
