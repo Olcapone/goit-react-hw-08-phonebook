@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import authSelectors from "../../redux/auth/auth-selectors";
 import ContactContainer from "../../components/ContactContainer/ContactContainer";
 import codes_map from "../../img/codes_map.png";
-import { CardMedia, Container, Typography } from "@mui/material";
+import { CardMedia, Container } from "@mui/material";
 import ContactsMenu from "../../components/ContactsMenu/ContactsMenu";
 
 const HomePage = () => {

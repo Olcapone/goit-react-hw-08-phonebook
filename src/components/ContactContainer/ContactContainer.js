@@ -2,12 +2,19 @@ import ContactForm from "../ContactForm/ContactForm";
 import Filter from "../Filter/Filter";
 import ContactList from "../ContactList/ContactList";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllContact } from "../../redux/contacts/contacts-selectors";
+import * as operations from "../../redux/contacts/contacts-operations";
 import { Container, Typography } from "@mui/material";
+import { useEffect } from "react";
 
 const ContactContainer = () => {
   const contacts = useSelector(getAllContact);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(operations.fetchContact());
+  }, []);
 
   return (
     <Container

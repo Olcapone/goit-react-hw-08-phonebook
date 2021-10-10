@@ -11,8 +11,8 @@ import { getContacts } from "../../redux/contacts/contacts-selectors";
 import { Button, List, ListItem, Typography } from "@mui/material";
 
 function ContactList({ onDelete }) {
-  const dispatch = useDispatch();
   const contact = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(operations.fetchContact());
@@ -55,8 +55,12 @@ function ContactList({ onDelete }) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  value: state.contacts.entities,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onDelete: (id) => dispatch(operations.deleteContact(id)),
 });
 
-export default connect(null, mapDispatchToProps)(ContactList);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
