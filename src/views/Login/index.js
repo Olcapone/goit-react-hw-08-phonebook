@@ -1,27 +1,23 @@
-import { TextField, Container, Button, FormGroup } from "@mui/material";
+import { Button, Container, FormGroup, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import authOperations from "../../redux/auth/auth-operations";
 import authSelectors from "../../redux/auth/auth-selectors";
 
-const Register = () => {
-  const [name, setName] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const isLogged = useSelector(authSelectors.getIsLoggedIn);
 
   const reset = () => {
-    setName("");
     setEmail("");
     setPassword("");
   };
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
-      case "name":
-        return setName(value);
       case "email":
         return setEmail(value);
       case "password":
@@ -34,8 +30,8 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (name !== "" && email !== "" && password !== "") {
-      dispatch(authOperations.register({ name, email, password }));
+    if (email !== "" && password !== "") {
+      dispatch(authOperations.login({ email, password }));
     }
 
     reset();
@@ -50,18 +46,8 @@ const Register = () => {
       }}
     >
       {!isLogged && (
-        <FormGroup sx={{ maxWidth: 320 }}>
+        <FormGroup sx={{ maxWidth: 350 }}>
           <form onSubmit={handleSubmit}>
-            <TextField
-              name="name"
-              type="text"
-              label="Name"
-              value={name}
-              onChange={handleChange}
-              variant="standard"
-              sx={{ width: 1 }}
-            />
-
             <TextField
               name="email"
               type="email"
@@ -81,18 +67,15 @@ const Register = () => {
               variant="standard"
               sx={{ width: 1 }}
             />
-
             <Button
               type="submit"
               onSubmit={(e) => {
                 e.preventDefault();
               }}
               variant="contained"
-              sx={{
-                mt: 2,
-              }}
+              sx={{ mt: 2 }}
             >
-              Register
+              Login
             </Button>
           </form>
         </FormGroup>
@@ -101,4 +84,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

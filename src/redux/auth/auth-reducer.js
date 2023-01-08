@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import authOperations from "./auth-operations";
 
 const initialState = {
-  user: { name: null, email: null },
+  user: { name: null, email: null, subscription: "starter" },
   token: null,
   isLoggedIn: false,
 };
@@ -10,26 +10,25 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  extraReducers: {
-    [authOperations.register.fulfilled]: (state, { payload }) => {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(authOperations.signup.fulfilled, (state, { payload }) => {
       state.user = payload.user;
-      state.token = payload.token;
-      state.isLoggedIn = true;
-    },
-    [authOperations.login.fulfilled]: (state, { payload }) => {
-      state.user = payload.user;
-      state.token = payload.token;
-      state.isLoggedIn = true;
-    },
-    [authOperations.logout.fulfilled]: (state) => {
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-    },
-    [authOperations.fetchCurrentUser.fulfilled]: (state, { payload }) => {
-      state.user = { ...payload };
-      state.isLoggedIn = true;
-    },
+    })
+      .addCase(authOperations.login.fulfilled, (state, { payload }) => {
+        state.user = payload.body.user;
+        state.token = payload.body.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(authOperations.logout.fulfilled, (state) => {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(authOperations.fetchCurrentUser.fulfilled, (state, { payload }) => {
+        state.user = { ...payload };
+        state.isLoggedIn = true;
+      })
   },
 });
 

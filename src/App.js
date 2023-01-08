@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { Switch, Route, Redirect } from "react-router";
+import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 //=== static components
@@ -8,21 +8,17 @@ import Navigation from "./Navigation/Navigation";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import authOperations from "./redux/auth/auth-operations";
-import { getAllContact } from "./redux/contacts/contacts-selectors";
 import ContactContainer from "./components/ContactContainer/ContactContainer";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import PublicRoute from "./components/PublicRoute/PublicRoute";
+import authSelectors from "./redux/auth/auth-selectors";
 
-//=== dinamic components
-const HomePage = lazy(() => import("./views/HomePage/HomePage"));
-const Login = lazy(() => import("./views/Login/Login"));
-const Register = lazy(() => import("./views/Register/Register"));
+//=== dynamic components
+const HomePage = lazy(() => import("./views/HomePage"));
+const Login = lazy(() => import("./views/Login"));
+const Signup = lazy(() => import("./views/Signup"));
 
 function App() {
   const dispatch = useDispatch();
-  const contact = useSelector(getAllContact);
-
-  console.log(contact.length === 0);
+  const isLogged = useSelector(authSelectors.getIsLoggedIn);
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
@@ -33,24 +29,15 @@ function App() {
       <Navigation />
 
       <Suspense fallback={<div>Loading...</div>}>
-        <Switch>
-          <PublicRoute exact path="/">
-            <HomePage />
-          </PublicRoute>
-          <PublicRoute path="/login" redirectTo="/contacts" restricted>
-            <Login />
-          </PublicRoute>
-
-          <PublicRoute path="/register" restricted>
-            <Register />
-          </PublicRoute>
-
-          <PrivateRoute path="/contacts" redirectTo="/login">
-            <ContactContainer />
-          </PrivateRoute>
-
-          <Redirect to="/" />
-        </Switch>
+        <Routes>
+          <Route exact path="/" element={<HomePage/>}></Route>
+          <Route path={isLogged ? "/contacts" : "/login"}
+                 element={isLogged ? <ContactContainer/> : <Login/>}
+          >
+          </Route>
+          <Route path="/register" element={<Signup/>}></Route>
+          <Route to="*" redirectTo="/"/>
+        </Routes>
       </Suspense>
       <ToastContainer
         position="top-right"

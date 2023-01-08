@@ -1,38 +1,50 @@
-import { combineReducers } from "redux";
-import { createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import actions from "./contacts-actions";
 
-const entities = createReducer([], {
-  [actions.fetchContactSuccess]: (_, { payload }) => payload,
-  [actions.addContactSuccess]: (state, { payload }) =>
-    state.find(
-      (contact) =>
-        contact.name === payload.name || contact.number === payload.number
-    )
-      ? state
-      : [...state, payload],
-  [actions.deleteContactSuccess]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload),
-});
+const initialState = {
+  contacts: [
+    { name: null, number: null}
+  ],
+  filter: '',
+  isLoading: false,
+  error: null
+};
 
-const filter = createReducer("", {
-  [actions.changeFilter]: (_, { payload }) => payload,
-});
+const contactSlice = createSlice({
+  name: "contact",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(actions.fetchContactRequest, (state, _) => {
+        state.isLoading = true
+        })
+      .addCase(actions.fetchContactSuccess,
+      (state, { payload }) => {
+        state.isLoading = false
+        state.contacts = payload;
+      })
+      .addCase(actions.addContactSuccess,
+        (state, { payload }) => {
 
-const isLoading = createReducer(false, {
-  [actions.fetchContactRequest]: () => true,
-  [actions.fetchContactSuccess]: () => false,
-  [actions.fetchContactError]: () => false,
-});
+          state.contacts = state?.contacts.find((contact) =>
+            contact.name === payload?.name || contact.number === payload?.number
+          )
+            ? state.contacts
+            : [...state.contacts, payload]
+        })
+      .addCase(actions.deleteContactSuccess,
+        (state, { payload }) =>
+          state.contacts = state?.contacts.filter(({ id }) => id !== payload)
+        )
+      .addCase(actions.changeFilter,
+        (state, { payload }) => {
+          state.filter = payload
+        })
+      .addCase(actions.fetchContactError, (state, _) => {
+        state.isLoading = false
+        })
+  }
+})
 
-const error = createReducer(null, {
-  [actions.fetchContactRequest]: (_, { payload }) => payload,
-  [actions.fetchContactRequest]: () => null,
-});
-
-export default combineReducers({
-  filter,
-  entities,
-  isLoading,
-  error,
-});
+export default contactSlice.reducer;

@@ -1,24 +1,28 @@
-import { Button, Container, FormGroup, TextField } from "@mui/material";
-import { maxWidth } from "@mui/system";
+import { TextField, Container, Button, FormGroup } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
 
 import authOperations from "../../redux/auth/auth-operations";
 import authSelectors from "../../redux/auth/auth-selectors";
 
-const Login = () => {
+const Signup = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const isLogged = useSelector(authSelectors.getIsLoggedIn);
 
   const reset = () => {
+    setName("");
     setEmail("");
     setPassword("");
   };
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
+      case "name":
+        return setName(value);
       case "email":
         return setEmail(value);
       case "password":
@@ -31,8 +35,8 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (email !== "" && password !== "") {
-      dispatch(authOperations.login({ email, password }));
+    if (!isEmpty(name) && !isEmpty(email) && !isEmpty(password)) {
+      dispatch(authOperations.signup({ name, email, password }));
     }
 
     reset();
@@ -47,8 +51,18 @@ const Login = () => {
       }}
     >
       {!isLogged && (
-        <FormGroup sx={{ maxWidth: 350 }}>
+        <FormGroup sx={{ maxWidth: 320 }}>
           <form onSubmit={handleSubmit}>
+            <TextField
+              name="name"
+              type="text"
+              label="Name"
+              value={name}
+              onChange={handleChange}
+              variant="standard"
+              sx={{ width: 1 }}
+            />
+
             <TextField
               name="email"
               type="email"
@@ -68,15 +82,18 @@ const Login = () => {
               variant="standard"
               sx={{ width: 1 }}
             />
+
             <Button
               type="submit"
               onSubmit={(e) => {
                 e.preventDefault();
               }}
               variant="contained"
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+              }}
             >
-              Login
+              Register
             </Button>
           </form>
         </FormGroup>
@@ -85,4 +102,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
