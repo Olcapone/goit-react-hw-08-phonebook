@@ -5,17 +5,18 @@ import authOperations from "../../redux/auth/auth-operations";
 
 const UserMenu = () => {
   const name = useSelector(authSelectors.getUserName);
+  const id = useSelector(authSelectors.getUserId);
   const dispatch = useDispatch();
 
   const handlerLogout = (e) => {
     e.preventDefault();
-    dispatch(authOperations.logout());
+    dispatch(authOperations.logout({ id }));
   };
 
   return (
     <>
       <Typography sx={{ color: "primary.contrastText", mr: 1 }}>
-        Welcome {name}!
+        Welcome ${name}!
       </Typography>
       <Button type="submit" variant="contained" onClick={handlerLogout}>
         Exit
