@@ -12,17 +12,16 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(authOperations.signup.fulfilled, (state, { payload }) => {
+    builder
+      .addCase(authOperations.signup.fulfilled, (state, { payload }) => {
       state.user = payload.user;
     })
       .addCase(authOperations.login.fulfilled, (state, { payload }) => {
-        state.user = payload.body.user;
-        state.token = payload.body.token;
+        state.user = payload;
         state.isLoggedIn = true;
       })
       .addCase(authOperations.logout.fulfilled, (state) => {
         state.user = { name: null, email: null };
-        state.token = null;
         state.isLoggedIn = false;
       })
       .addCase(authOperations.fetchCurrentUser.fulfilled, (state, { payload }) => {

@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-axios.defaults.baseURL = "http://localhost:3001/api";
+axios.defaults.baseURL = "http://localhost:3003";
 
 const token = {
   set(token) {
@@ -20,12 +21,14 @@ const signup = createAsyncThunk("auth/signup", async (credentials) => {
   } catch (error) {}
 });
 
-const login = createAsyncThunk("auth/login", async (credentials) => {
+const login = createAsyncThunk("auth/login", async (credentials, thunkAPI) => {
   try {
     const { data } = await axios.post("/auth/login", credentials);
     token.set(data.token);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    toast.error(error.message);
+  }
 });
 
 const logout = createAsyncThunk("auth/logout", async (credentials) => {

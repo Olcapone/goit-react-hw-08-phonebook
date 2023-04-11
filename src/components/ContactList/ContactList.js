@@ -4,19 +4,22 @@ import shortid from "shortid";
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-import * as operations from "../../redux/contacts/contacts-operations";
-import { getContacts } from "../../redux/contacts/contacts-selectors";
+import { getTricks } from "../../redux/tricks/tricks-selectors";
 
 //=== styles
 import { Button, List, ListItem, Typography } from "@mui/material";
+import authSelectors from "../../redux/auth/auth-selectors";
+import { deleteTrick, fetchTricks } from "../../redux/tricks/tricks-operations";
 
 function ContactList({ onDelete }) {
-  const contact = useSelector(getContacts);
+  const tricks = useSelector(getTricks);
   const dispatch = useDispatch();
+  const id = useSelector(authSelectors.getUserId);
 
+  // add link for get trick by id
   useEffect(() => {
-    dispatch(operations.fetchContact());
-  }, [dispatch]);
+    dispatch(fetchTricks());
+  }, [dispatch, id]);
 
   return (
     <>
@@ -28,7 +31,7 @@ function ContactList({ onDelete }) {
       </Typography>
 
       <List>
-        {contact.map(({ name, number, id }) => (
+        {tricks.map(({ name, phone, id }) => (
           <ListItem
             key={shortid.generate()}
             sx={{
@@ -38,7 +41,7 @@ function ContactList({ onDelete }) {
           >
             {name}:
             <Typography component="span" sx={{ mr: 1 }}>
-              {number}
+              {phone}
             </Typography>
             <Button
               type="button"
@@ -60,7 +63,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onDelete: (id) => dispatch(operations.deleteContact(id)),
+  onDelete: (id) => dispatch(deleteTrick(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

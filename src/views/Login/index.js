@@ -1,5 +1,6 @@
 import { Button, Container, FormGroup, TextField } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import authOperations from "../../redux/auth/auth-operations";
@@ -9,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigation = useNavigate()
   const isLogged = useSelector(authSelectors.getIsLoggedIn);
 
   const reset = () => {
@@ -31,7 +33,8 @@ const Login = () => {
     e.preventDefault();
 
     if (email !== "" && password !== "") {
-      dispatch(authOperations.login({ email, password }));
+      dispatch(authOperations.login({ email, password }))
+        .then(_ => navigation('/'));
     }
 
     reset();

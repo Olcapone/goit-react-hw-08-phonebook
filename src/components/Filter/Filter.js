@@ -1,7 +1,6 @@
 import { TextField } from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
-import contactActions from "../../redux/contacts/contacts-actions";
 
 const Filter = ({ value, onChange }) => {
   return (
@@ -22,7 +21,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onChange: (e) => dispatch(contactActions.changeFilter(e.target.value)),
+//  onChange: (e) => dispatch(contactActions.changeFilter(e.target.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
