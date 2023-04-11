@@ -1,22 +1,25 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import PropTypes from "prop-types";
-//===redux
-import { connect, useSelector } from "react-redux";
-import * as operations from "../../redux/contacts/contacts-operations";
-//===styles
-
-import { getAllContact } from "../../redux/contacts/contacts-selectors";
 import { FormGroup, TextField, Button } from "@mui/material";
+//===redux
+import { useDispatch } from "react-redux";
+//===styles
+import { addTrick } from "../../redux/tricks/tricks-operations";
 
-function ContactForm({ onSubmit }) {
+function ContactForm() {
   const [stateName, setName] = useState("");
-  const [number, setNumber] = useState("");
-  const contacts = useSelector(getAllContact);
+  const [level, setLevel] = useState("");
+  const [dynamic, setDynamic] = useState("");
+  const [flexibility, setFlexibility] = useState("");
+  const [power, setPower] = useState("");
+  const dispatch = useDispatch();
 
   const reset = () => {
     setName("");
-    setNumber("");
+    setLevel("");
+    setDynamic("");
+    setFlexibility("");
+    setPower("");
   };
 
   const handleChange = (e) => {
@@ -25,8 +28,17 @@ function ContactForm({ onSubmit }) {
     if (name !== 0) {
       if (name === "name") {
         setName(value);
-      } else if (name === "number") {
-        setNumber(value);
+      } else if (name === "level") {
+        setLevel(value);
+      }
+      else if (name === "dynamic") {
+        setDynamic(value);
+      }
+      else if (name === "flexibility") {
+        setFlexibility(value);
+      }
+      else if (name === "power") {
+        setPower(value);
       }
     }
   };
@@ -34,15 +46,7 @@ function ContactForm({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      !contacts.find(
-        (contact) => contact.name === stateName || contact.number === number
-      )
-    ) {
-      onSubmit({ stateName, number });
-    } else {
-      toast.warning("Contact already exists!");
-    }
+    dispatch(addTrick({ name: stateName, level, config: { dynamic, flexibility, power } }));
     reset();
   };
 
@@ -63,13 +67,44 @@ function ContactForm({ onSubmit }) {
         />
 
         <TextField
-          label="Number"
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
+          label="Level"
+          type="text"
+          name="level"
           required
-          value={number}
+          value={level}
+          onChange={handleChange}
+          variant="standard"
+          sx={{ width: 1 }}
+        />
+
+        <TextField
+          label="Dynamic"
+          type="text"
+          name="dynamic"
+          required
+          value={dynamic}
+          onChange={handleChange}
+          variant="standard"
+          sx={{ width: 1 }}
+        />
+
+        <TextField
+          label="Flexibility"
+          type="text"
+          name="flexibility"
+          required
+          value={flexibility}
+          onChange={handleChange}
+          variant="standard"
+          sx={{ width: 1 }}
+        />
+
+        <TextField
+          label="Power"
+          type="text"
+          name="power"
+          required
+          value={power}
           onChange={handleChange}
           variant="standard"
           sx={{ width: 1 }}
@@ -93,9 +128,4 @@ ContactForm.propTypes = {
   number: PropTypes.string,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: ({ stateName, number }) =>
-    dispatch(operations.addContacts({ stateName, number })), //=== call function with props
-});
-
-export default connect(null, mapDispatchToProps)(ContactForm);
+export default ContactForm;

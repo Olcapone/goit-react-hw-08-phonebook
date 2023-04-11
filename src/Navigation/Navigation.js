@@ -16,9 +16,8 @@ const Navigation = () => {
         <AppBarLogo />
         {isLogged ? (
           <>
-            {" "}
             <ContactsMenu />
-            <UserMenu />{" "}
+            <UserMenu />
           </>
         ) : (
           <AuthNav />

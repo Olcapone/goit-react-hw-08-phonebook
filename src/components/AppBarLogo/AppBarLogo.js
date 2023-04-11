@@ -1,12 +1,12 @@
-import { useHistory, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Typography } from "@mui/material";
 
 const AppBarLogo = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const onGoBack = () => {
-    history.push(location?.state?.from ?? "/");
+    navigate(location?.state?.from ?? "/");
   };
 
   return (

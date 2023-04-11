@@ -1,20 +1,21 @@
+import { useEffect } from "react";
+import { isEmpty } from "lodash";
+import { Container, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTricks } from "../../redux/tricks/tricks-selectors";
+
 import ContactForm from "../ContactForm/ContactForm";
 import Filter from "../Filter/Filter";
 import ContactList from "../ContactList/ContactList";
-
-import { useDispatch, useSelector } from "react-redux";
-import { getAllContact } from "../../redux/contacts/contacts-selectors";
-import * as operations from "../../redux/contacts/contacts-operations";
-import { Container, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { fetchTricks } from "../../redux/tricks/tricks-operations";
 
 const ContactContainer = () => {
-  const contacts = useSelector(getAllContact);
+  const tricks = useSelector(getAllTricks);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(operations.fetchContact());
-  }, []);
+    dispatch(fetchTricks());
+  }, [dispatch]);
 
   return (
     <Container
@@ -26,23 +27,17 @@ const ContactContainer = () => {
         width: 350,
       }}
     >
-      {contacts.length === 0 && (
-        <Typography
-          component="h3"
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        >
+      {isEmpty(tricks) && (
+        <Typography component="h3" sx={{ mt: 2, mb: 2 }}>
           There are no contacts here yet, let's add?
         </Typography>
       )}
 
       <ContactForm />
-      {contacts.length !== 0 && (
+      {!isEmpty(tricks) && (
         <>
-          <Filter />
-          <ContactList />
+          {/*<Filter />*/}
+          {/*<ContactList />*/}
         </>
       )}
     </Container>
